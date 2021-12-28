@@ -47,8 +47,8 @@ export class Directory extends React.Component {
     render() {
         return (
             <div className="directory-menu">
-            { this.state.sessions.map(({title, imageUrl, size, id}) =>(
-                <MenuItem key={id} title={title} imageUrl={imageUrl} size={size} />
+            { this.state.sessions.map(({id, ...session}) =>(
+                <MenuItem key={id} {...session} />
             ))}
             </div>
         )
