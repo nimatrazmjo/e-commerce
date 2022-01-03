@@ -45,8 +45,11 @@ export default class SignIn extends Component {
                     value={this.state.password} 
                     handleChange={this.handleChange}
                     />
+                    <div className="buttons">
                     <CustomButton type="submit"> Sign In </CustomButton> 
-                    <CustomButton onClick={signInWithGoogle}> Sign In With Google </CustomButton> 
+                    <CustomButton isGoogleButton={true} onClick={signInWithGoogle}> Sign In With Google </CustomButton> 
+                    </div>
+                    
                 </form>
             </div>
         )
