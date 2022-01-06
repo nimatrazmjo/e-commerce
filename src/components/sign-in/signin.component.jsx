@@ -20,8 +20,6 @@ export default class SignIn extends Component {
 
     handleSubmit = event => {
         event.preventDefault(0);
-        console.log(this.state,' state')
-        this.setState({email: '', password: ''});
     }
  
     render() {
