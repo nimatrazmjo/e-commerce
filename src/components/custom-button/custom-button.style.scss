@@ -12,6 +12,7 @@
   font-family: 'Open Sans Condensed';
   font-weight: bolder;
   border: none;
+  border-radius: 5px;
   cursor: pointer;
   margin-right: 5px;
   &:hover {
@@ -19,4 +20,14 @@
     color: black;
     border: 1px solid black;
   }
+  &.google-button {
+    background-color: rgb(62, 62, 255);
+    color: #ffffff;
+
+    &:hover {
+      background-color: blue;
+      border: none;
+    }
+  }
 }
+

@@ -1,6 +1,6 @@
 import {initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { doc, getFirestore, collection, addDoc } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBnCHEuuUJAfk6M3L56Cd3lCF6YCf9IHBQ",
@@ -14,10 +14,38 @@ const firebaseConfig = {
 
 // Initialize Firebase
 initializeApp(firebaseConfig);
-
 export const authentication = getAuth();
 
 export const fireStore = getFirestore();
+
+export const createUserProfile = async (userAuth, additionalData) => {
+  if (!userAuth) return;
+
+  
+
+  // if(!snapShopt.exists) {
+    const { displayName, email } = userAuth;
+    const createdAt = new Date();
+    try {
+      const docRef = await addDoc(collection(fireStore, "users"), {
+        displayName,
+        email,
+        createdAt,
+        ...additionalData
+      });
+      console.log("Document written with ID: ", docRef.id);
+      return docRef;
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+
+
+
+  // }
+
+}
+
+
 
 const provider = new GoogleAuthProvider();
 

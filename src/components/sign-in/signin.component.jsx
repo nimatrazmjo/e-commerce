@@ -20,8 +20,6 @@ export default class SignIn extends Component {
 
     handleSubmit = event => {
         event.preventDefault(0);
-        console.log(this.state,' state')
-        this.setState({email: '', password: ''});
     }
  
     render() {
@@ -45,8 +43,11 @@ export default class SignIn extends Component {
                     value={this.state.password} 
                     handleChange={this.handleChange}
                     />
-                    <CustomButton type="submit"> Sign In </CustomButton> 
-                    <CustomButton onClick={signInWithGoogle}> Sign In With Google </CustomButton> 
+                    <div className="buttons">
+                        <CustomButton type="submit"> Sign In </CustomButton> 
+                        <CustomButton isGoogleButton={true} onClick={signInWithGoogle}> Sign In With Google </CustomButton> 
+                    </div>
+                    
                 </form>
             </div>
         )

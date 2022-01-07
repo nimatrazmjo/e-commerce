@@ -6,18 +6,43 @@ import { Routes, Route } from 'react-router-dom'
 import Shop from './pages/shop/shop.component';
 import Header from './components/header/header.component';
 import SignInAndSignUp from './pages/signin-and-signup/signin-and-signup.component';
+import { Component } from 'react';
+import { authentication, createUserProfile } from './firebase/firebase.utils';
+import { onSnapshot } from 'firebase/firestore';
 
-function App() {
-  return (
-    <div>
-      <Header />
-      <Routes>
-        <Route path='/' element={<HomePage />} />
-        <Route path='/shop' element={<Shop />} />
-        <Route path='/login' element={<SignInAndSignUp />} />
-      </Routes>
-    </div>
-  );
+class App extends Component {
+
+  unsubscribeFromAuth = null;
+  constructor() {
+    super();
+    this.state = {
+      currentUser: null
+    }
+  }
+
+  componentDidMount() {
+    this.unsubscribeFromAuth = authentication.onAuthStateChanged(async user => {
+      const userRef = await createUserProfile(user);
+      this.setState({currentUser: user});
+    })
+  }
+
+  componentWillUnmount () {
+    this.unsubscribeFromAuth = null;
+  }
+
+  render () {
+    return (
+      <div>
+        <Header currentUser={this.state.currentUser} />
+        <Routes>
+          <Route path='/' element={<HomePage />} />
+          <Route path='/shop' element={<Shop />} />
+          <Route path='/login' element={<SignInAndSignUp />} />
+        </Routes>
+      </div>
+    );
+  }
 }
 
 export default App;
