@@ -1,25 +1,39 @@
 import React from "react";
 import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+
+import { selectCartItems } from "../../redux/cart/cart.selector";
+import { toggleCartHidden } from "../../redux/cart/cart.action";
 import CartItem from "../cart-item/cart-item.component";
 
 import CustomButton from '../custom-button/custom-button.component';
 
 import './cart-dropdown.style.scss';
 
-const CartDropDown = ({ cartItems }) => {
-    
+const CartDropDown = ({ cartItems, dispatch }) => {
+    let navigate = useNavigate();
     return (
         <div className="cart-dropdown">
             <div className="cart-items" />
-            {cartItems.map(item=><CartItem key={item.id} item={item} />)}
-            <CustomButton > Checkout </CustomButton>
+            {
+                cartItems.length ?
+                    cartItems.map(item => <CartItem key={item.id} item={item} />)
+                    : <span className="empty">
+                        Your cart is empty
+                    </span>
+            }
+            <CustomButton onClick={() => {
+                navigate('/checkout');
+                dispatch(toggleCartHidden());
+            }} > Checkout </CustomButton>
         </div>
     )
 }
 
 
-const mapsStateToProps = ({ cart: { cartItems } }) => ({
-    cartItems
+const mapsStateToProps = (state) => ({
+    cartItems: selectCartItems(state)
 });
 
 export default connect(mapsStateToProps)(CartDropDown)
